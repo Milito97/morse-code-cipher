@@ -1,6 +1,7 @@
 package application;
 import java.util.Scanner;
 
+import model.MorseEncoder;
 import model.MorseMessageDecoder;
 import model.MorseMessageEncoder;
 
@@ -9,12 +10,14 @@ public class MCodeApp
 {
     /**
      *  Give a brief description of what main does
+     * @throws Exception 
      */
-    public static void main(String args[])
+    public static void main(String args[]) throws Exception
     {
         Scanner in = new Scanner(System.in);
         MorseMessageDecoder decoder = new  MorseMessageDecoder();
         MorseMessageEncoder encoder = new  MorseMessageEncoder();
+        MorseEncoder encoderTest = new MorseEncoder();
         String message;
         char choice = ' ';
 
@@ -33,7 +36,9 @@ public class MCodeApp
                     case 'E':
                             System.out.println ("Enter the message you'd like to encode into Morse Code");
                             message = in.nextLine();
-                            //System.out.println (encoder.encodeMessage(message));
+                            System.out.println (encoder.encodeMessage(message));
+                    case 'T':
+                    	encoderTest.loadData();
                     default:   
                 }
             }
