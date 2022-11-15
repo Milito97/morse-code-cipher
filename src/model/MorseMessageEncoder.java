@@ -8,9 +8,10 @@ public class MorseMessageEncoder
 	
     public String encodeMessage(String message) {
     	
+    	String newMessage = "";
+    	
     	String uppered = message.toUpperCase();
-    	System.out.println(uppered.charAt(0));
-    	String newMessage = null;
+    	//System.out.println(uppered.charAt(0));
     	
     	for (int k=0; k<uppered.length(); k++) {
     		newMessage+=encoderObject.encode(uppered.charAt(k));
