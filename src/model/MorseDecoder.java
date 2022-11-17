@@ -22,6 +22,7 @@ public class MorseDecoder
 		
 		String currentLine;
 		String [] splittedLine;
+		int iterations = 0;
 		
 		tree = new BinaryTree<>(' ');
 		
@@ -37,28 +38,33 @@ public class MorseDecoder
 
 				splittedLine = currentLine.split(" ");
 				
+				int subStringLength = splittedLine[1].length() - 1;
+				char letterToAdd = splittedLine[0].charAt(0);
+				
 				BinaryTree<Character> current = tree;
 				
-				for (int i = 0; i < splittedLine[1].length(); i++) {
-					
-					if (splittedLine[1].charAt(i) == '.') {
-						
-						if (i == (splittedLine[1].length() - 1)) {
-							current.setLeft(new BinaryTree<Character>(splittedLine[0].charAt(0)));
-						} else {
-							current = current.getLeft();
-						}
-
-					} else if (splittedLine[1].charAt(i) == '-') {
-						
-						if (i == (splittedLine[1].length() - 1)) {
-							current.setRight(new BinaryTree<Character>(splittedLine[0].charAt(0)));
-						} else {
-							current = current.getRight();
-						}
-					}
-					
-				}
+				addTree(current, splittedLine, iterations);
+				
+//				for (int i = 0; i < splittedLine[1].length(); i++) {
+//					
+//					if (splittedLine[1].charAt(i) == '.') {
+//						
+//						if (i == subStringLength) {
+//							current.setLeft(new BinaryTree<Character>(letterToAdd));
+//						} else {
+//							current = current.getLeft();
+//						}
+//
+//					} else if (splittedLine[1].charAt(i) == '-') {
+//						
+//						if (i == subStringLength) {
+//							current.setRight(new BinaryTree<Character>(letterToAdd));
+//						} else {
+//							current = current.getRight();
+//						}
+//					}
+//					
+//				}
 				
 			}
 			
@@ -68,8 +74,38 @@ public class MorseDecoder
 		print();
 		
 	}
+	
+	public void addTree(BinaryTree<Character> current, String [] splittedLine, int i) {
+		
+		int subStringLength = splittedLine[1].length() - 1;
+		char letterToAdd = splittedLine[0].charAt(0);
+		
+		if (splittedLine[1].charAt(i) == '.') {
+			
+			if (i == subStringLength) {
+				current.setLeft(new BinaryTree<Character>(letterToAdd));
+			} else {
+				current = current.getLeft();
+				i++;
+				addTree(current, splittedLine, i);
+			}
+
+		} else if (splittedLine[1].charAt(i) == '-') {
+			
+			if (i == subStringLength) {
+				current.setRight(new BinaryTree<Character>(letterToAdd));
+			} else {
+				current = current.getRight();
+				i++;
+				addTree(current, splittedLine, i);
+			}
+		}
+		
+	}
 
 	public void print() {
+		
+		System.out.println(tree.size());
 		
 		Iterator<Character> it = tree.iterator();
 		
