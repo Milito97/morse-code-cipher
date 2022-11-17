@@ -1,11 +1,13 @@
 package model;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.io.File;
 
 public class MorseDecoder
 {
 	private final String FILE_PATH = "res/codes.txt";
-	public File decodingFile;
+	private File decodingFile;
+	private BinaryTree<Character> tree;
 	
 	public MorseDecoder() {
 		try {
@@ -21,7 +23,7 @@ public class MorseDecoder
 		String currentLine;
 		String [] splittedLine;
 		
-		BinaryTree<Character> tree = new BinaryTree<>(' ');
+		tree = new BinaryTree<>(' ');
 		
 		decodingFile = new File(FILE_PATH);
 		
@@ -45,7 +47,6 @@ public class MorseDecoder
 							current.setLeft(new BinaryTree<Character>(splittedLine[0].charAt(0)));
 						} else {
 							current = current.getLeft();
-							//continue;
 						}
 
 					} else if (splittedLine[1].charAt(i) == '-') {
@@ -54,7 +55,6 @@ public class MorseDecoder
 							current.setRight(new BinaryTree<Character>(splittedLine[0].charAt(0)));
 						} else {
 							current = current.getRight();
-							//continue;
 						}
 					}
 					
@@ -63,18 +63,18 @@ public class MorseDecoder
 			}
 			
 			fileReader.close();
-		} 
-
-		print(tree);
+		}
+		
+		print();
 		
 	}
-	
-	public void print(BinaryTree<Character> tree) {
+
+	public void print() {
 		
-		System.out.println(tree.size());
+		Iterator<Character> it = tree.iterator();
 		
-		for (int i = 0; i < tree.size(); i++) {
-			System.out.println(tree.iterator().next());
+		while (it.hasNext()) {
+			System.out.println(it.next());
 		}
 		
 	}
