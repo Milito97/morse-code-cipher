@@ -1,12 +1,14 @@
 package model;
-import java.io.FileNotFoundException;
 
 
-public class MorseMessageDecoder
-{
+public class MorseMessageDecoder {
+	
+	MorseDecoder decoder = new MorseDecoder();
+	
     public String decodeMessage(String message) {
     
     	
     	return message;
     }
+    
 }
