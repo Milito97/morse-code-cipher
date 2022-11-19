@@ -15,13 +15,18 @@ public class MorseMessageDecoder {
     		
     		String[] splitLetters = word.split("   ");
     		
+    		decodedText += " ";
+    		
     		for (String letter : splitLetters) {
+    			
     			decodedText += decoder.decoder(decoder.getTree(), letter);
+    			
     		}
     		
     	}
     	
-    	return decodedText;
+    	return decodedText.trim();
+    	
     }
     
 }
