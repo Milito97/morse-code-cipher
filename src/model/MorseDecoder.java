@@ -11,7 +11,7 @@ public class MorseDecoder
 	
 	public MorseDecoder() {
 		
-		tree = new  BinaryTree<Character>(' ');
+		tree = new BinaryTree<Character>(' ');
         try {
 			createTree(FILE_PATH);
 		} catch (FileNotFoundException e) {

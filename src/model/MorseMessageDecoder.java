@@ -5,9 +5,23 @@ public class MorseMessageDecoder {
 	
 	MorseDecoder decoder = new MorseDecoder();
 	
-    public char decodeMessage(String message) {
+    public String decodeMessage(String message) {
     	
-    	return decoder.decoder(decoder.getTree(), message);
+    	String decodedText = "";
+    	
+    	String[] words = message.split("       ");
+    	
+    	for (String word : words) {
+    		
+    		String[] splitLetters = word.split("   ");
+    		
+    		for (String letter : splitLetters) {
+    			decodedText += decoder.decoder(decoder.getTree(), letter);
+    		}
+    		
+    	}
+    	
+    	return decodedText;
     }
     
 }
