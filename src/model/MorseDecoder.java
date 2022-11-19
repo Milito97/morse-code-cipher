@@ -2,110 +2,105 @@ package model;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class MorseDecoder
 {
 	private final String FILE_PATH = "res/codes.txt";
-	private File decodingFile;
 	private BinaryTree<Character> tree;
 	
 	public MorseDecoder() {
-		try {
-			loadData();
-		} catch (Exception e) {
+		
+		tree = new  BinaryTree<Character>(' ');
+        try {
+			createTree(FILE_PATH);
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
 	}
 	
-	private void loadData() throws Exception {
+	private void createTree(String fileName) throws FileNotFoundException {
 		
-		String currentLine;
-		String [] splittedLine;
-		int iterations = 0;
-		
-		tree = new BinaryTree<>(' ');
-		
-		decodingFile = new File(FILE_PATH);
-		
-		if (decodingFile.exists()) {
-			
-			Scanner fileReader = new Scanner(decodingFile);
-			
-			while (fileReader.hasNextLine()) {
-				
-				currentLine = fileReader.nextLine();
+        Scanner in = new Scanner(new File(fileName));
+        String letter;
+        String code;
 
-				splittedLine = currentLine.split(" ");
-				
-				int subStringLength = splittedLine[1].length() - 1;
-				char letterToAdd = splittedLine[0].charAt(0);
-				
-				BinaryTree<Character> current = tree;
-				
-				addTree(current, splittedLine, iterations);
-				
-//				for (int i = 0; i < splittedLine[1].length(); i++) {
-//					
-//					if (splittedLine[1].charAt(i) == '.') {
-//						
-//						if (i == subStringLength) {
-//							current.setLeft(new BinaryTree<Character>(letterToAdd));
-//						} else {
-//							current = current.getLeft();
-//						}
-//
-//					} else if (splittedLine[1].charAt(i) == '-') {
-//						
-//						if (i == subStringLength) {
-//							current.setRight(new BinaryTree<Character>(letterToAdd));
-//						} else {
-//							current = current.getRight();
-//						}
-//					}
-//					
-//				}
-				
-			}
-			
-			fileReader.close();
-		}
-		
-		print();
-		
-	}
+        while (in.hasNextLine()) {
+        	
+            letter = in.next();
+            code = in.next();
+            addTree (tree, letter.charAt(0), code);
+            
+        }
+        
+        in.close();
+        
+        print();
+    }
 	
-	public void addTree(BinaryTree<Character> current, String [] splittedLine, int i) {
+	private void addTree(BinaryTree<Character> tree, char charToPlace, String code) {
 		
-		int subStringLength = splittedLine[1].length() - 1;
-		char letterToAdd = splittedLine[0].charAt(0);
-		
-		if (splittedLine[1].charAt(i) == '.') {
-			
-			if (i == subStringLength) {
-				current.setLeft(new BinaryTree<Character>(letterToAdd));
-			} else {
-				current = current.getLeft();
-				i++;
-				addTree(current, splittedLine, i);
-			}
-
-		} else if (splittedLine[1].charAt(i) == '-') {
-			
-			if (i == subStringLength) {
-				current.setRight(new BinaryTree<Character>(letterToAdd));
-			} else {
-				current = current.getRight();
-				i++;
-				addTree(current, splittedLine, i);
-			}
-		}
+		char firstCharInCode;
+    	
+        if (code.equals(".")) {
+        	
+        	tree.setLeft(new BinaryTree<Character>(charToPlace));
+        	
+        } else if (code.equals("-")) {
+        	
+        	tree.setRight(new BinaryTree<Character>(charToPlace));
+        	
+        } else {
+        	
+        	firstCharInCode = code.charAt(0);
+        	code = code.substring(1);
+        	
+        	if (firstCharInCode == '.') {
+        		
+        		addTree(tree.getLeft(), charToPlace, code);
+        	
+        	} else {
+        		
+        		addTree(tree.getRight(), charToPlace, code);
+        		
+        	}
+        }
 		
 	}
+    
+    public char decoder(BinaryTree<Character> tree, String code) {
+    	
+    	char firstCharInCode;
+    	char decodedChar = '0';
+    	
+        if (code.equals("")) {
+        	
+        	decodedChar = tree.getRootElement();
+        	
+        } else {
+        	
+        	firstCharInCode = code.charAt(0);
+        	code = code.substring(1);
+        	
+        	if (firstCharInCode == '.') {
+        		
+        		decodedChar = decoder(tree.getLeft(), code);
+        	
+        	} else {
+        		
+        		decodedChar = decoder(tree.getRight(), code);
+        	}
+        	
+        }
+    	
+        return decodedChar;
+        
+    }
+    	
 
 	public void print() {
-		
-		System.out.println(tree.size());
 		
 		Iterator<Character> it = tree.iterator();
 		
@@ -113,6 +108,10 @@ public class MorseDecoder
 			System.out.println(it.next());
 		}
 		
+	}
+
+	public BinaryTree<Character> getTree() {
+		return tree;
 	}
 	
 }	

@@ -5,9 +5,9 @@ public class MorseMessageDecoder {
 	
 	MorseDecoder decoder = new MorseDecoder();
 	
-    public String decodeMessage(String message) {
-    
-    	return message;
+    public char decodeMessage(String message) {
+    	
+    	return decoder.decoder(decoder.getTree(), message);
     }
     
 }

@@ -31,7 +31,7 @@ public class MCodeApp
                     case 'D':
                             System.out.println ("Enter the message you'd like to decode from Morse Code");
                             message = in.nextLine();
-                            //System.out.println (decoder.decodeMessage(message)); 
+                            System.out.println (decoder.decodeMessage(message)); 
                             break;
                     case 'E':
                             System.out.println ("Enter the message you'd like to encode into Morse Code");
