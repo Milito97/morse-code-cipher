@@ -61,7 +61,7 @@ public class MorseDecoder
         		
         		addTree(tree.getLeft(), charToPlace, code);
         	
-        	} else {
+        	} else if (firstCharInCode == '-') {
         		
         		addTree(tree.getRight(), charToPlace, code);
         		
@@ -88,9 +88,12 @@ public class MorseDecoder
         		
         		decodedChar = decoder(tree.getLeft(), code);
         	
-        	} else {
+        	} else if (firstCharInCode == '-') {
         		
         		decodedChar = decoder(tree.getRight(), code);
+        		
+        	} else {
+        		throw new RuntimeException("Invalid Morse Code Input. Try Again: ");
         	}
         	
         }
