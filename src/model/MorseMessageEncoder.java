@@ -12,8 +12,16 @@ public class MorseMessageEncoder
     	String uppered = message.toUpperCase();
     	//System.out.println(uppered.charAt(0));
     	
-    	for (int k=0; k<uppered.length(); k++) {
-    		newMessage+=encoderObject.encode(uppered.charAt(k));
+    	try {
+    		
+    		for (int k=0; k<uppered.length(); k++) {
+        		newMessage+=encoderObject.encode(uppered.charAt(k));
+        	}
+    		
+    	} catch (ArrayIndexOutOfBoundsException e) {
+    		
+    		return "Invalid Character entered. Only letters and spaces allowed. Try again: ";
+    		
     	}
     	
     	return newMessage;

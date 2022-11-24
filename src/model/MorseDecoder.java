@@ -37,7 +37,7 @@ public class MorseDecoder
         
         in.close();
         
-        print();
+//        print();  //Used to print the tree and check if its correct//
     }
 	
 	private void addTree(BinaryTree<Character> tree, char charToPlace, String code) {

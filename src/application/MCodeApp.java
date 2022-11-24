@@ -32,10 +32,12 @@ public class MCodeApp
                 {
                     case 'D':
                     	
+                    		System.out.println ("Enter the message you'd like to decode from Morse Code or enter e to return");
+                    	
                     		while (flag == true) {
                     			
                     			flag = false;
-                    			System.out.println ("Enter the message you'd like to decode from Morse Code or enter e to return");
+                    			
                                 message = in.nextLine();
                                 
                                 if (message.equals("e")) {
@@ -57,9 +59,32 @@ public class MCodeApp
                             
                             break;
                     case 'E':
-                            System.out.println ("Enter the message you'd like to encode into Morse Code");
-                            message = in.nextLine();
-                            System.out.println(encoder.encodeMessage(message));
+                    	
+                    		System.out.println ("Enter the message you'd like to encode into Morse Code or enter e to return: ");
+                    		
+                    		while (flag == true) {
+                    			
+                    			flag = false;
+                    			
+                                message = in.nextLine();
+                                String encodedMessage = encoder.encodeMessage(message);
+                                
+                                if (message.equals("e")) {
+                                	break;
+                                	
+                                } else if (encodedMessage.equals("Invalid Character entered. Only letters and spaces allowed. Try again: ")) {
+                                	
+                                	flag = true;
+                                	System.out.println (encodedMessage);
+                                	
+                                } else {
+                                	
+                                	System.out.println (encodedMessage);
+                                	
+                                }
+                    			
+                    		}
+                    	
                             break;
                     case 'T':
                     		encoderTest.loadData();
